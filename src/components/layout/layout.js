@@ -1,21 +1,19 @@
 import Box from "@mui/material/Box";
 import AppBar from "@mui/material/AppBar";
-import { Button, IconButton, Stack, Toolbar, Typography } from "@mui/material";
+import { Stack, Toolbar, Typography } from "@mui/material";
 import React, { useContext } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import ShuffleOnRoundedIcon from "@mui/icons-material/ShuffleOnRounded";
 import AlgoContext from "../../store/algo-contect";
 import FactoryRoundedIcon from "@mui/icons-material/FactoryRounded";
-import { IconBtn } from "../../api/IconButton";
 import { generateArray } from "../../helpers/generateArr";
 import Algorithm from "./Algorithm";
+import ThemeChanger from "./ThemeChanger";
+import DrawerIcon from "./Drawer";
+import { makeStyledButton } from "../../api/makeStyledButton";
+import { grey } from "@mui/material/colors";
+
+const StyledThemeButton = makeStyledButton([0], true);
 const Layout = (props) => {
-  const { reset, isFinished, setArr } = useContext(AlgoContext);
-  const handleReShuffle = () => {
-    if (isFinished) {
-      reset();
-    }
-  };
+  const { isFinished, setArr } = useContext(AlgoContext);
   const genrateArrayHandler = async () => {
     const genArray = await generateArray();
     setArr(genArray);
@@ -24,17 +22,26 @@ const Layout = (props) => {
   return (
     <React.Fragment>
       <AppBar>
-        <Toolbar sx={{ bgcolor: "white", color: "black" }}>
+        <Toolbar
+          sx={{
+            bgcolor: (theme) => {
+              return theme.palette.mode === "light" ? grey[50] : grey[800];
+            },
+            color: (theme) => {
+              return theme.palette.mode === "light" ? grey[900] : grey[50];
+            },
+          }}
+        >
+          <DrawerIcon />
           <Typography
             variant="h5"
             component="h2"
             sx={{
               fontFamily: `'Lobster', cursive`,
-              fontSize: { xs: 20, sm: 30 },
-              // display: { xs: "none", sm: "block" },
+              fontSize: { xs: 24, sm: 40 },
             }}
           >
-            Visualizer
+            Vi
           </Typography>
           <Box flexGrow={1} textAlign="center">
             <Algorithm />
@@ -42,27 +49,26 @@ const Layout = (props) => {
           <Stack
             sx={{ mx: 1 }}
             direction="row"
-            spacing={{ xs: 0.75, sm: 1, md: 2 }}
+            spacing={{ xs: 1, sm: 2, md: 4 }}
             alignItems="center"
           >
-            <IconBtn
+            <ThemeChanger />
+            {/* <StopButton /> */}
+            {/* <StyledThemeButton
               disabled={!isFinished}
               disableRipple={true}
               onClick={handleReShuffle}
-              sx={{ p: 0 }}
             >
               <ShuffleOnRoundedIcon />
-            </IconBtn>
+            </StyledThemeButton> */}
 
-            <IconBtn
+            <StyledThemeButton
               disabled={!isFinished}
-              size="large"
               disableRipple={true}
               onClick={genrateArrayHandler}
-              sx={{ p: 0 }}
             >
               <FactoryRoundedIcon />
-            </IconBtn>
+            </StyledThemeButton>
           </Stack>
         </Toolbar>
       </AppBar>

@@ -3,7 +3,6 @@ export const VisualBoxStyle = {
   marginX: "auto",
   height: "auto",
   marginTop: 10,
-  backgroundColor: "#094d4d",
   borderRadious: 4,
   p: 1.25,
   boxShadow: 8,

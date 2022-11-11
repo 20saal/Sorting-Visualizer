@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Button, Paper, Stack } from "@mui/material";
+import React, { useContext, useState } from "react";
+import { Button, Divider, Paper, Stack } from "@mui/material";
 import Zoom from "@mui/material/Zoom";
 import useSelectionSort from "../../algo/SelectionSort";
 import { VisualBoxStyle } from "../../helpers/constant";
@@ -10,9 +10,7 @@ import BoxElem from "./BoxElem";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
-let resumePromise = () => {
-  // console.log("doing nothing");
-};
+let resumePromise;
 const VisualBox = () => {
   const [start, setStart] = useState(false);
   const { arr, setArr, algo, isFinished, pause, resume, isPaused } =
@@ -34,11 +32,8 @@ const VisualBox = () => {
           if (value.paused) {
             await new Promise((resolve) => {
               const timerId = setTimeout(resolve, [200000]);
-              resumePromise = () => {
-                resolve("resolved");
-                clearTimeout(timerId);
-                // console.log("resolving promise");
-              };
+              resumePromise = resolve;
+              clearTimeout(timerId);
             });
           }
           setArr([...value.copiedArr]);
@@ -55,7 +50,6 @@ const VisualBox = () => {
               resumePromise = () => {
                 resolve("resolved");
                 clearTimeout(timerId);
-                // console.log("resolving promise");
               };
             });
           }
@@ -69,15 +63,22 @@ const VisualBox = () => {
     pause();
   };
   const handleResume = () => {
-    resumePromise();
+    if (isPaused.current) {
+      resumePromise();
+    }
     resume();
-    console.log("unPaused", unpaused);
   };
 
   return (
     <React.Fragment>
       <Zoom in={true}>
-        <Paper sx={{ ...VisualBoxStyle }}>
+        <Paper
+          sx={{
+            ...VisualBoxStyle,
+            bgcolor: (theme) =>
+              theme.palette.mode === "dark" ? "#057a85" : "#6b045a",
+          }}
+        >
           <Stack
             direction="row"
             sx={{
@@ -109,9 +110,9 @@ const VisualBox = () => {
         sx={{
           mt: 1.25,
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
+          flexDirection: { sm: "row" },
           justifyContent: "space-around",
-          gap: { xs: 1, sm: 1.25 },
+          gap: { xs: 1, sm: 3 },
           width: "95%",
           marginX: "auto",
           my: 2,
@@ -126,6 +127,7 @@ const VisualBox = () => {
         >
           Pause
         </Button>
+        <Divider orientation="vertical" flexItem />
         <Button
           startIcon={<PlayCircleRoundedIcon />}
           disabled={!isFinished}
@@ -135,8 +137,9 @@ const VisualBox = () => {
         >
           Start
         </Button>
+        <Divider orientation="vertical" flexItem />
         <Button
-          disabled={!start}
+          disabled={!start && unpaused}
           variant="contained"
           startIcon={<RestartAltRoundedIcon />}
           onClick={handleResume}

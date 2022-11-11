@@ -40,7 +40,6 @@ export default function useBubbleSort() {
       let count = 0;
       for (let j = 0; j < copiedArr.length - 1; j++) {
         if (isPaused.current) {
-          console.log("isPaused", isPaused.current);
           yield { copiedArr, paused: true };
         }
         dispatch({ type: "START", index: j });

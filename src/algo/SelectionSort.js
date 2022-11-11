@@ -48,7 +48,7 @@ export default function useSelectionSort() {
           minIndex = j;
           await new Promise((resolve) => setTimeout(resolve, 100));
           setMinIndex(minIndex); // //mark red color after finding other smallest elem
-          await new Promise((resolve) => setTimeout(resolve, 300));
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
       }
       swap(copiedArr, minIndex, i);

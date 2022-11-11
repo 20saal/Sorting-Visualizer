@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { useContext, useEffect, useMemo } from "react";
 import { boxItemStyles } from "../../helpers/constant";
 import AlgoContext from "../../store/algo-contect";
+import { styled } from "@mui/material/styles";
 
 export default function BoxElem(props) {
   const { length, item, itemIndex, BubbColorState, SelColorState, minIndex } =
@@ -40,6 +41,7 @@ export default function BoxElem(props) {
       elemWidth = 15;
     }
   }, []);
+
   return (
     <Box
       key={item}

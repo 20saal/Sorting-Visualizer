@@ -23,7 +23,6 @@ function Algorithm(props) {
   return (
     <div>
       <Button
-        size="small"
         disabled={!isFinished}
         variant="text"
         id="basic-button"
@@ -31,6 +30,7 @@ function Algorithm(props) {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        sx={{ fontSize: { xs: 16, sm: 18 } }}
       >
         {title}
       </Button>
