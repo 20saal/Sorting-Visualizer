@@ -6,7 +6,7 @@ const colorReducer = (prevState, action) => {
   switch (action.type) {
     case "LOOP": {
       return {
-        color: "#099e9e",
+        color: "yellow",
         currindex: action.index,
       };
     }
@@ -43,7 +43,7 @@ export default function useSelectionSort() {
           yield { copiedArr, paused: true };
         }
         dispatch({ type: "LOOP", index: j }); //visualize looping for finding smallest elem
-        await new Promise((resolve) => setTimeout(resolve, 200));
+        await new Promise((resolve) => setTimeout(resolve, 100));
         if (+copiedArr[minIndex] > +copiedArr[j]) {
           minIndex = j;
           await new Promise((resolve) => setTimeout(resolve, 100));

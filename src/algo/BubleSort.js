@@ -39,6 +39,7 @@ export default function useBubbleSort() {
     for (let i = 0; i < copiedArr.length; i++) {
       let count = 0;
       for (let j = 0; j < copiedArr.length - 1; j++) {
+        //when paused is clicked
         if (isPaused.current) {
           yield { copiedArr, paused: true };
         }

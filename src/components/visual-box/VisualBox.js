@@ -10,63 +10,27 @@ import BoxElem from "./BoxElem";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
-let resumePromise;
+import useSort from "../../hooks/useSort";
 const VisualBox = () => {
-  const [start, setStart] = useState(false);
-  const { arr, setArr, algo, isFinished, pause, resume, isPaused } =
-    useContext(AlgoContext);
+  const { isFinished, pause, isPaused } = useContext(AlgoContext);
   const unpaused = !isPaused.current;
-  const { bubbleSort, colorState: BubbColorState } = useBubbleSort();
   const {
-    colorState: SelColorState,
+    start,
+    arr,
+    handleVisual,
+    handlePromiseResolve,
+    colorState,
     minIndex,
-    minIndexGen,
-  } = useSelectionSort();
+  } = useSort();
 
-  const handleStart = () => {
-    setStart(true);
-    if (algo === "Selection-Sort") {
-      const genMinIndex = minIndexGen(arr);
-      (async () => {
-        for await (let value of genMinIndex) {
-          if (value.paused) {
-            await new Promise((resolve) => {
-              const timerId = setTimeout(resolve, [200000]);
-              resumePromise = resolve;
-              clearTimeout(timerId);
-            });
-          }
-          setArr([...value.copiedArr]);
-        }
-        setStart(false);
-      })();
-    } else if (algo === "Bubble-Sort") {
-      const genBubble = bubbleSort(arr);
-      (async () => {
-        for await (let value of genBubble) {
-          if (value.paused) {
-            await new Promise((resolve) => {
-              const timerId = setTimeout(resolve, [200000]);
-              resumePromise = () => {
-                resolve("resolved");
-                clearTimeout(timerId);
-              };
-            });
-          }
-          setArr([...value.copiedArr]);
-        }
-        setStart(false);
-      })();
-    }
+  const handleStart = async () => {
+    await handleVisual();
   };
   const handlePause = () => {
     pause();
   };
   const handleResume = () => {
-    if (isPaused.current) {
-      resumePromise();
-    }
-    resume();
+    handlePromiseResolve();
   };
 
   return (
@@ -81,12 +45,6 @@ const VisualBox = () => {
         >
           <Stack
             direction="row"
-            sx={{
-              height: "100%",
-              px: 2,
-              pt: 1,
-              bgcolor: "inherit",
-            }}
             alignItems="flex-end"
             justifyContent="space-around"
           >
@@ -97,8 +55,7 @@ const VisualBox = () => {
                 item={item}
                 itemIndex={itemIndex}
                 minIndex={minIndex}
-                SelColorState={SelColorState}
-                BubbColorState={BubbColorState}
+                colorState={colorState}
               >
                 {item}
               </BoxElem>
@@ -119,7 +76,7 @@ const VisualBox = () => {
         }}
       >
         <Button
-          disabled={!start}
+          disabled={isFinished}
           variant="contained"
           startIcon={<PauseRoundedIcon />}
           onClick={handlePause}
@@ -139,7 +96,7 @@ const VisualBox = () => {
         </Button>
         <Divider orientation="vertical" flexItem />
         <Button
-          disabled={!start && unpaused}
+          disabled={isFinished && unpaused}
           variant="contained"
           startIcon={<RestartAltRoundedIcon />}
           onClick={handleResume}

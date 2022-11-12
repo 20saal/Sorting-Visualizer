@@ -1,14 +1,4 @@
-import {
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { Divider, List, ListItem, Toolbar, Typography } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
@@ -21,11 +11,17 @@ export default function DrawerIcon() {
   const handleDrawerToggle = () => {
     setOpenDrawer((prev) => !prev);
   };
+
   return (
     <React.Fragment>
-      <StyledThemeButton disableRipple={true} onClick={handleDrawerToggle}>
+      <StyledThemeButton
+        sx={{ display: { lg: "none" } }}
+        disableRipple={true}
+        onClick={handleDrawerToggle}
+      >
         <MenuRoundedIcon />
       </StyledThemeButton>
+
       <Drawer open={openDrawer} onClose={handleDrawerToggle}>
         <Toolbar>
           <Typography
@@ -33,20 +29,18 @@ export default function DrawerIcon() {
             component="h2"
             sx={{
               fontFamily: `'Lobster', cursive`,
-              fontSize: { xs: 20, sm: 32 },
+              fontSize: { xs: 24, sm: 32 },
             }}
           >
             Visualizer
           </Typography>
         </Toolbar>
-        <Divider />
+        <Divider component="div" />
         <List>
           <ListItem>
             <ReShuffle />
           </ListItem>
-          <ListItem>
-            <StopButton />
-          </ListItem>
+          <Divider />
         </List>
       </Drawer>
     </React.Fragment>

@@ -16,7 +16,9 @@ export default function ReShuffle() {
         startIcon={<ShuffleOnRoundedIcon />}
         disabled={!isFinished}
         onClick={handleReShuffle}
-        sx={{ color: "black" }}
+        sx={{
+          color: (theme) => (theme.palette.mode === "dark" ? "white" : "black"),
+        }}
       >
         ReShuffle
       </Button>

@@ -33,6 +33,7 @@ const Layout = (props) => {
           }}
         >
           <DrawerIcon />
+
           <Typography
             variant="h5"
             component="h2"
@@ -53,14 +54,6 @@ const Layout = (props) => {
             alignItems="center"
           >
             <ThemeChanger />
-            {/* <StopButton /> */}
-            {/* <StyledThemeButton
-              disabled={!isFinished}
-              disableRipple={true}
-              onClick={handleReShuffle}
-            >
-              <ShuffleOnRoundedIcon />
-            </StyledThemeButton> */}
 
             <StyledThemeButton
               disabled={!isFinished}

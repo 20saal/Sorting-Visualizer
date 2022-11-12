@@ -5,10 +5,10 @@ import AlgoContext from "../../store/algo-contect";
 import { styled } from "@mui/material/styles";
 
 export default function BoxElem(props) {
-  const { length, item, itemIndex, BubbColorState, SelColorState, minIndex } =
-    props;
+  const { length, item, itemIndex, colorState, minIndex } = props;
   const { algo } = useContext(AlgoContext);
 
+  const { BubbColorState, SelColorState } = colorState;
   let elemBgColor;
 
   switch (algo) {
