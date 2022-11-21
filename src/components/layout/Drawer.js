@@ -15,7 +15,7 @@ export default function DrawerIcon() {
   return (
     <React.Fragment>
       <StyledThemeButton
-        sx={{ display: { lg: "none" } }}
+        // sx={{ display: { lg: "none" } }}
         disableRipple={true}
         onClick={handleDrawerToggle}
       >

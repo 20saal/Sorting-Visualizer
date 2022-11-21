@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import useBubbleSort from "../algo/BubleSort";
+import useInsertionSort from "../algo/InsertionSort";
+import useMergeSort from "../algo/MergeSort";
 import useSelectionSort from "../algo/SelectionSort";
 import AlgoContext from "../store/algo-contect";
-let resolvePromise;
+let resolvePromise = () => {};
 export default function useSort() {
-  const [start, setStart] = useState(false);
   //   const [colorState, setColorState] = useState({});
   const { bubbleSort, colorState: BubbColorState } = useBubbleSort();
   const {
@@ -12,8 +13,10 @@ export default function useSort() {
     minIndex,
     minIndexGen: selectionSortGen,
   } = useSelectionSort();
+  const { mergeSort } = useMergeSort();
 
   const { arr, setArr, algo, resume, isPaused } = useContext(AlgoContext);
+  const { insertionSort, colorState: InsertionColorState } = useInsertionSort();
 
   async function sortHelper(generator) {
     for await (let value of generator) {
@@ -38,18 +41,20 @@ export default function useSort() {
     }
   };
   async function handleVisual() {
-    setStart(true);
     switch (algo) {
       case "Selection-Sort": {
         const genMinIndex = selectionSortGen(arr);
         await sortHelper(genMinIndex);
-        setStart(false);
         break;
       }
       case "Bubble-Sort": {
         const genBubble = bubbleSort(arr);
         await sortHelper(genBubble);
-        setStart(false);
+        break;
+      }
+      case "Insertion-Sort": {
+        const inserGen = insertionSort(arr);
+        await sortHelper(inserGen);
         break;
       }
     }
@@ -59,8 +64,7 @@ export default function useSort() {
     handleVisual,
     arr,
     handlePromiseResolve,
-    start,
-    colorState: { BubbColorState, SelColorState },
+    colorState: { BubbColorState, SelColorState, InsertionColorState },
     minIndex,
   };
 }

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 
 const AlgoContext = React.createContext({
-  algo: "Bubble-Sort",
+  algo: "Algorithams",
   arr: [],
   isFinished: true,
   markFinished: () => {},
@@ -18,7 +18,7 @@ export const AlgoContextProvider = (props) => {
   ];
   const [arr, setArr] = useState(initialArr);
   const [isFinished, setIsFinished] = useState(true);
-  const [algo, setAlgo] = useState("Bubble-Sort");
+  const [algo, setAlgo] = useState("Algorithams");
   const isPaused = useRef(false); //The returned mutable object will persist for the full lifetime of the component.
   const pause = () => {
     isPaused.current = true;

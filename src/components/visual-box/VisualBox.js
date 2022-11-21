@@ -1,11 +1,9 @@
 import Box from "@mui/material/Box";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Divider, Paper, Stack } from "@mui/material";
 import Zoom from "@mui/material/Zoom";
-import useSelectionSort from "../../algo/SelectionSort";
 import { VisualBoxStyle } from "../../helpers/constant";
 import AlgoContext from "../../store/algo-contect";
-import useBubbleSort from "../../algo/BubleSort";
 import BoxElem from "./BoxElem";
 import PlayCircleRoundedIcon from "@mui/icons-material/PlayCircleRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
@@ -14,14 +12,8 @@ import useSort from "../../hooks/useSort";
 const VisualBox = () => {
   const { isFinished, pause, isPaused } = useContext(AlgoContext);
   const unpaused = !isPaused.current;
-  const {
-    start,
-    arr,
-    handleVisual,
-    handlePromiseResolve,
-    colorState,
-    minIndex,
-  } = useSort();
+  const { arr, handleVisual, handlePromiseResolve, colorState, minIndex } =
+    useSort();
 
   const handleStart = async () => {
     await handleVisual();

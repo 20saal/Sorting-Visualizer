@@ -60,7 +60,18 @@ const Layout = (props) => {
               disableRipple={true}
               onClick={genrateArrayHandler}
             >
-              <FactoryRoundedIcon />
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <FactoryRoundedIcon />
+                <Typography variant="caption" component="p">
+                  Generate
+                </Typography>
+              </Box>
             </StyledThemeButton>
           </Stack>
         </Toolbar>

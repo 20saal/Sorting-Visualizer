@@ -8,10 +8,14 @@ export default function BoxElem(props) {
   const { length, item, itemIndex, colorState, minIndex } = props;
   const { algo } = useContext(AlgoContext);
 
-  const { BubbColorState, SelColorState } = colorState;
+  const { BubbColorState, SelColorState, InsertionColorState } = colorState;
   let elemBgColor;
 
   switch (algo) {
+    case "Algorithams": {
+      elemBgColor = "white";
+      break;
+    }
     case "Selection-Sort": {
       elemBgColor =
         (itemIndex === SelColorState.currindex && SelColorState.color) ||
@@ -27,6 +31,20 @@ export default function BoxElem(props) {
           : "white";
       break;
     }
+    case "Insertion-Sort":
+      {
+        if (
+          itemIndex >= InsertionColorState.unOrdIndex &&
+          InsertionColorState.unOrdIndex
+        ) {
+          elemBgColor = "pink";
+        } else if (itemIndex === InsertionColorState.currindex) {
+          elemBgColor = "red";
+        } else {
+          elemBgColor = "white";
+        }
+      }
+      break;
   }
 
   let elemWidth = 30;

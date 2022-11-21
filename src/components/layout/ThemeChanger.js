@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import ColorContext from "../../store/color-context";
 import NightsStayIcon from "@mui/icons-material/NightsStay";
@@ -13,11 +13,20 @@ export default function ThemeChanger() {
   return (
     <React.Fragment>
       <StyledThemeButton disableRipple={true} onClick={handleTheme}>
-        {themeMode === "light" ? (
-          <NightsStayIcon />
-        ) : (
-          <Brightness7RoundedIcon />
-        )}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {themeMode === "light" ? (
+            <NightsStayIcon />
+          ) : (
+            <Brightness7RoundedIcon />
+          )}
+          <Typography variant="caption">Theme</Typography>
+        </Box>
       </StyledThemeButton>
     </React.Fragment>
   );

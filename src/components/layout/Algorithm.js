@@ -7,15 +7,15 @@ import AlgoContext from "../../store/algo-contect";
 
 function Algorithm(props) {
   const { isFinished, setSelectedAlgo } = useContext(AlgoContext);
-  const [title, setTitle] = useState("Bubble-Sort");
-  const algoArray = ["Bubble-Sort", "Selection-Sort"];
+  const [title, setTitle] = useState("Algorithams");
+  const algoArray = ["Bubble-Sort", "Selection-Sort", "Insertion-Sort"];
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleAlgo = (event) => {
-    setSelectedAlgo((prev) => event.target.innerText || prev); //clicking elswhere don't have any innerText
+    setSelectedAlgo((prev) => event.target.innerText || prev); //clicking elsewhere don't have any innerText
     setTitle((prev) => event.target.innerText || prev);
     setAnchorEl(null);
   };

@@ -28,7 +28,7 @@ const colorReducer = (prevState, action) => {
   };
 };
 export default function useBubbleSort() {
-  const { markStart, markFinished, isPaused, resume } = useContext(AlgoContext);
+  const { markStart, markFinished, isPaused } = useContext(AlgoContext);
   const [colorState, dispatch] = useReducer(colorReducer, {
     color: "white",
     currindex: null,
